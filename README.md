@@ -21,7 +21,7 @@
   <figcaption><strong>Figure 1.</strong> Aspirin&reg; represented in <strong>wInChI</strong> with generated <strong>InChI</strong> string, key and auxiliary information (<code>AuxInfo</code>).</figcaption>
 </figure></em>
 
-<br /><br />
+<br />
 Please refer to <a href="https://www.inchi-trust.org/">InChI GitHub repository</a> for more detailed information, source codes and binaries/APIs about the <strong>InChI</strong> software.
 
 Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-Web-Demo">InChI Web Demo</a>, a web-based `GUI` for calculation of <strong>InChI</strong> strings and keys from chemical structures' visual depictions.
