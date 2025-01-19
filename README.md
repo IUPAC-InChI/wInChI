@@ -12,7 +12,7 @@
 # wInChI - GUI software for calculation of IUPAC International Chemical Identifiers (InChIs)
 
 <strong>wInChI</strong> is a _64-bit_ <code>GUI</code> software for <code>Microsoft&reg; Windows</code> platforms designed to: 
-- calculate <strong>InChI structure-based chemical identifiers</strong>, i.e. <strong>InChI</strong> strings, keys and auxilliary information (<code>AuxInfo</code>)
+- calculate <strong>InChI</strong> structure-based chemical identifiers, i.e. <strong>InChI</strong> strings, keys and auxilliary information (<code>AuxInfo</code>)
 - visually represent input chemical structures.
 
 
