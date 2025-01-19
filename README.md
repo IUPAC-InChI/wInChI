@@ -9,7 +9,7 @@
   <img src="https://github.com/IUPAC-InChI/InChI/blob/main/Images/inchi-wheel.png" width="300" height="300" />
 </p>
 
-# wInChI - GUI software for calculation of IUPAC International Chemical Identifiers (InChI)
+# wInChI - GUI software for calculation of IUPAC International Chemical Identifiers (InChIs)
 
 <strong>wInChI</strong> is a _64-bit_ <code>GUI</code> software for <code>Microsoft&reg; Windows</code> platforms designed to: 
 - calculate <a href="https://github.com/IUPAC-InChI/InChI/">InChI structure-based chemical identifiers (<strong>InChIs</strong>)</a>, i.e. <strong>InChI</strong> strings, keys and auxilliary information (<code>AuxInfo</code>)
