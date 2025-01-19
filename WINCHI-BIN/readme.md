@@ -38,12 +38,4 @@ Some portions of code were developed/changed by external contributors
 
 <p><a href="mailto:info@inchi-trust.org">info@inchi-trust.org</a></p>
 */
-<p>&nbsp;</p>
-<p>This directory contains binaries of command line `InChI` executable (<code>inchi-1</code>) and <code>InChI API</code> library (<code>libinchi</code>). The 64-bit and 32-bit versions are supplied for both Microsoft<sup>&reg;</sup> Windows, Linux and MacOS<sup>&reg;</sup> .</p>
 
-<p>Please note that <code>InChI</code> stand-alone executable <code>inchi-1[.exe]</code> does not require <code>.dll/.so</code> libraries.</p>
-
-<p>To use the shared library, you may wish to create <code>libinchi.so.1</code> as a symbolic link to <code>libinchi.so.1.07</code>.</p>
-
-<p>Also included is a legacy <code>1.06</code> version of <code>winchi-1.exe</code>, a graphical Microsoft<sup>&reg;</sup> Windows application (located in directory <code>windows</code>; it is a 32-bit version which will also run under 64-bit Microsoft<sup>&reg;</sup> Windows).</p>
-</div>
