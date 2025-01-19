@@ -32,7 +32,7 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
 
 ## wInChI release notes
 
-- <em>Version 1.07.2</em>: 19/01/2025
+- <em>Version 1.07.2</em> (19/01/2025):
   - First version of <strong>wInChI</strong> which is entirely built using <code>Microsoft&reg; Windows API</code>, <code>Microsoft&reg; MFC</code> and <code>Microsoft&reg; MSVC compiler</code>.
   - Supports <strong>InChI</strong> versions <code>1.07.2</code> as well as <code>1.06</code> (once provided with the source code of corresponding <strong>InChI</strong> version in <code>INCHI-1-SRC</code> folder). Please refer to <a href="compiling-from-source"> compiling from source</a>.
 
