@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{dc2c933a-1af6-425f-b46b-9e4678124a24}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{cc9bd305-2ac1-4f36-8b7f-b81f167858bd}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cIChIres.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_EXE\inchi-1\src\dispstru.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichi_bns.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichi_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IChI_lib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichican2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichicano.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichicans.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichierr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiisot.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimak2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimake.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimap1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimap2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimap4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichinorm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiparm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiprt1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiprt2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiprt3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiqueu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiring.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr6.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvr7.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichisort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichister.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ichitaut.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ikey_base26.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\ikey_dll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\inchi_gui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\mol2atom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\mol_fmt1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\mol_fmt2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\mol_fmt3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\mol_fmt4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\readinch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\runichi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\runichi2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\runichi3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\runichi4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\sha2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\strutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\INCHI-1-SRC\INCHI_BASE\src\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichi.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ixa.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_EXE\inchi-1\src\dispstru.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\extr_ct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichi_bns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichi_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ichi_lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichicano.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichicant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichicomn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichicomp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichidrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichierr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichimake.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichinorm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichiring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichirvrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichisize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichister.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichitaut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ichitime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\ikey_base26.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\inchi_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\inchi_gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\inchicmp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\incomdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\inpdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\mode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\mol_fmt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\readinch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\sha2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\strutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCHI-1-SRC\INCHI_BASE\src\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
