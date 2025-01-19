@@ -13,9 +13,15 @@
 
 <strong>wInChI</strong> is a <code>Microsoft&reg; Windows</code> platform <code>GUI</code> software designed for calculation of <a href="https://github.com/IUPAC-InChI/InChI/">InChI structure-based chemical identifiers</a> that also contains a visual representation of input chemical structures.
 
-<img src="docs/img/winchi_in_action.jpg" />
 
 <strong>InChI</strong> is a structure-based textual identifier, strictly unique, non-proprietary, open source, and freely accessible, whose identifiers describe chemical substances in terms of layers of information – the atoms and their bond connectivity, tautomeric information, isotope information, stereochemistry, and electronic charge.
-<br />Please refer to <a href="https://www.inchi-trust.org/">InChI GitHub repository</a> for more detailed information, source codes and binaries/APIs about the <strong>InChI</strong> software.
+
+<em><figure>
+  <img src="docs/img/winchi_in_action.jpg" />
+  <figcaption><strong>Figure 1.</strong> Aspirin&reg; represented in <strong>wInChI</strong> with generated <strong>InChI</strong> string, key and auxiliary information (<code>AuxInfo</code>).</figcaption>
+</figure></em>
+
+<br /><br />
+Please refer to <a href="https://www.inchi-trust.org/">InChI GitHub repository</a> for more detailed information, source codes and binaries/APIs about the <strong>InChI</strong> software.
 
 Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-Web-Demo">InChI Web Demo</a>, a web-based `GUI` for calculation of <strong>InChI</strong> strings and keys from chemical structures' visual depictions.
