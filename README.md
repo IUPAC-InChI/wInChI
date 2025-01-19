@@ -11,10 +11,12 @@
 
 # wInChI - GUI software for calculation of IUPAC International Chemical Identifiers (InChI)
 
-<strong>wInChI</strong> is a <code>Microsoft&reg; Windows</code> platform <code>GUI</code> software designed for calculation of <a href="https://github.com/IUPAC-InChI/InChI/">InChI structure-based chemical identifiers (<strong>InChIs</strong>)</a> that also contains a visual representation of input chemical structures.
+<strong>wInChI</strong> is a _64-bit_ <code>GUI</code> software for <code>Microsoft&reg; Windows</code> platforms designed to: 
+- calculate <a href="https://github.com/IUPAC-InChI/InChI/">InChI structure-based chemical identifiers (<strong>InChIs</strong>)</a>, i.e. <strong>InChI</strong> strings, keys and auxilliary information (<code>AuxInfo</code>)
+- visually represent input chemical structures
 
 
-<strong>InChI</strong> is a structure-based textual identifier, strictly unique, non-proprietary, open source, and freely accessible, whose identifiers describe chemical substances in terms of layers of information – the atoms and their bond connectivity, tautomeric information, isotope information, stereochemistry, and electronic charge.
+<a href="https://en.wikipedia.org/wiki/International_Chemical_Identifier"><strong>InChI</strong></a> is a structure-based textual identifier, strictly unique, non-proprietary, open source, and freely accessible, whose identifiers describe chemical substances in terms of layers of information – the atoms and their bond connectivity, tautomeric information, isotope information, stereochemistry, and electronic charge.
 
 <em><figure>
   <img src="docs/img/winchi_in_action.jpg" />
