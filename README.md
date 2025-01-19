@@ -15,6 +15,8 @@
 - calculate <strong>InChI</strong> structure-based chemical identifiers, i.e. <strong>InChI</strong> strings, keys and auxilliary information (<code>AuxInfo</code>)
 - visually represent input chemical structures.
 
+Until <strong>InChI</strong> version <code>v.1.07.0</code>, <strong>wInChI</strong> was an integral part of <strong>InChI</strong> software, but is now being developed as an individual project.
+At the same time, <code>wInChI</code> will be regularly updated with every new release of <code>InChI</code> software.
 
 <strong><a href="https://en.wikipedia.org/wiki/International_Chemical_Identifier">InChI</a></strong> is a structure-based textual identifier, strictly unique, non-proprietary, open source, and freely accessible, whose identifiers describe chemical substances in terms of layers of information – the atoms and their bond connectivity, tautomeric information, isotope information, stereochemistry, and electronic charge.
 
@@ -24,7 +26,7 @@
 </figure></em>
 
 <br /><br />
-Please refer to <a href="https://github.com/IUPAC-InChI/InChI/">InChI GitHub repository</a> for more detailed information, source codes and binaries/APIs about the <strong>InChI</strong> software.
+More detailed information about the <strong>InChI</strong> software, including its source code and binaries/APIs, can be found at <a href="https://github.com/IUPAC-InChI/InChI/">InChI GitHub repository</a>.
 
 Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-Web-Demo">InChI Web Demo</a>, a web-based `GUI` for calculation of <strong>InChI</strong> strings and keys from chemical structures' visual depictions.
 
