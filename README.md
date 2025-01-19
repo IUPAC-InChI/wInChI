@@ -34,7 +34,7 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
 
 - <em>Version 1.07.2</em> (19/01/2025):
   - First version of <strong>wInChI</strong> which is entirely built using <code>Microsoft&reg; Windows API</code>, <code>Microsoft&reg; MFC</code> and <code>Microsoft&reg; MSVC compiler</code>.
-  - Supports <strong>InChI</strong> versions <code>1.07.2</code> as well as <code>1.06</code> (once provided with the source code of corresponding <strong>InChI</strong> version in <code>INCHI-1-SRC</code> folder). Please refer to <a href="https://github.com/IUPAC-InChI/WInChI/tree/main?tab=readme-ov-file#compiling-from-source">compiling from source</a>.
+  - Supports <strong>InChI</strong> versions <code>1.07.2</code> as well as <code>1.06</code> (once provided with the source code of corresponding <strong>InChI</strong> version in <code>INCHI-1-SRC</code> folder). Please refer to <a href="#compiling">compiling from source</a>.
 
 ## Using precompiled binaries
 
@@ -42,6 +42,8 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
 It can be run on <code>Microsoft&reg; Windows</code> platforms by double-clicking the executable `winchi-1.exe` as there are no dependencies on any external libraries.
 
 ## Compiling from source
+
+<a id="compiling"></a>
 
 - Since <strong>wInChI</strong> was developed using <code>Microsoft&reg; Windows API</code> and <code><a href="https://en.wikipedia.org/wiki/Microsoft_Foundation_Class_Library">Microsoft&reg; MFC</a></code>, the <ins>only</ins> compiler which can be used to successfully build <strong>wInChI</strong> is <code>Microsoft&reg; Visual C++ (MSVC)</code>.
 - <code>Microsoft&reg; Visual Studio</code> solution <code>wIChI.sln</code> is located in the root of the <code><a href="wIChI">wIChI</a></code> folder, and consists of two projects:
