@@ -44,7 +44,7 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
 
 <a id="compiling"></a>
 
-- Since <strong>wInChI</strong> was developed using <code>Microsoft&reg; Windows API</code> and <code><a href="https://en.wikipedia.org/wiki/Microsoft_Foundation_Class_Library">Microsoft&reg; MFC</a></code>, the <ins>only</ins> compiler which can be used to successfully build <strong>wInChI</strong> is <code>Microsoft&reg; Visual C++ (MSVC)</code>.
+- Since <strong>wInChI</strong> has been developed using <code>Microsoft&reg; Windows API</code> and <code><a href="https://en.wikipedia.org/wiki/Microsoft_Foundation_Class_Library">Microsoft&reg; MFC</a></code>, the <ins>only</ins> compiler which can be used to successfully build <strong>wInChI</strong> is <code>Microsoft&reg; Visual C++ (MSVC)</code>.
 - <code>Microsoft&reg; Visual Studio</code> solution <code>wIChI.sln</code> is located in the root of the <code><a href="wIChI">wIChI</a></code> folder, and consists of two projects:
   - main <code>wIChI</code> project with source code files located in <code><a href="wIChI/src/">wIChI/src</a></code> folder
   - supporting <code>IChI_lib</code> project with source code files located in <code><a href="IChI_lib/src/">IChI_lib/src</a></code> folder
