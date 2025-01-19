@@ -7,4 +7,6 @@
 [![Good reads](https://img.shields.io/badge/Goodreads-372213?style=flat&logo=goodreads&logoColor=white)](https://www.inchi-trust.org/inchi-overview-papers-presentations/?wpv_aux_current_post_id=4309&wpv_aux_parent_post_id=4309&wpv_view_count=4473)
 [![InChI - Web Demo](https://img.shields.io/badge/InChI-Web_Demo-2ea44f)](https://iupac-inchi.github.io/InChI-Web-Demo/)
 
-<img src="https://github.com/IUPAC-InChI/InChI/blob/main/Images/inchi-wheel.png" width="300" height="300" style="display: block; margin: 0 auto" />
+<p align="center">
+  <img src="https://github.com/IUPAC-InChI/InChI/blob/main/Images/inchi-wheel.png" width="300" height="300" />
+</p>
