@@ -38,7 +38,7 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
 
 ## Using precompiled binaries
 
-<em>64-bit</em> precompiled binary (executable) is located in the following folder: <code>WINCHI-BIN/windows/64bit/winchi-1.exe</code>.
+<em>64-bit</em> precompiled binary (executable) titled `winchi-1.exe` is located in the following folder: <code><a href="WINCHI-BIN/windows/64bit/">WINCHI-BIN/windows/64bit/</a></code>.
 
 ## Compiling from source
 
