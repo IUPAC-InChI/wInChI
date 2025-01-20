@@ -16,7 +16,7 @@
 - visually represent input chemical structures.
 
 Until <strong>InChI</strong> version <code>v.1.07.0</code>, <strong>wInChI</strong> was an integral part of <strong>InChI</strong> software, but is now being developed as an individual project.
-Nevertheless, <code>wInChI</code> will be regularly updated with every new release of <code>InChI</code> software.
+Nevertheless, <strong>wInChI</strong> will be regularly updated with every new release of <strong>InChI</strong> software.
 
 <strong><a href="https://en.wikipedia.org/wiki/International_Chemical_Identifier">InChI</a></strong> is a structure-based textual identifier, strictly unique, non-proprietary, open source, and freely accessible, whose identifiers describe chemical substances in terms of layers of information – the atoms and their bond connectivity, tautomeric information, isotope information, stereochemistry, and electronic charge.
 
