@@ -44,12 +44,12 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
 
 <a id="compiling"></a>
 
-- Since <strong>wInChI</strong> has been developed using <code>Microsoft&reg; Windows API</code> and <code><a href="https://en.wikipedia.org/wiki/Microsoft_Foundation_Class_Library">Microsoft&reg; MFC</a></code>, the <ins>only</ins> compiler which can be used to successfully build <strong>wInChI</strong> is <code>Microsoft&reg; Visual C++ (MSVC)</code>.
+- Since <strong>wInChI</strong> has been developed using <code>Microsoft&reg; Windows API</code> and <code><a href="https://en.wikipedia.org/wiki/Microsoft_Foundation_Class_Library">Microsoft&reg; MFC</a></code>, <code>Microsoft&reg; Visual C++ (MSVC)</code> compiler is recommended for building <strong>wInChI</strong> from the source.
 - <code>Microsoft&reg; Visual Studio</code> solution <code>wIChI.sln</code> is located in the root of the <code><a href="wIChI">wIChI</a></code> folder, and consists of two projects:
-  - main <code>wIChI</code> project with source code files located in <code><a href="wIChI/src/">wIChI/src</a></code> folder
-  - supporting <code>IChI_lib</code> project with source code files located in <code><a href="IChI_lib/src/">IChI_lib/src</a></code> folder
+  - main <code>wIChI</code> project, with source code files located in <code><a href="wIChI/src/">wIChI/src</a></code> folder
+  - supporting <code>IChI_lib</code> project, with source code files located in <code><a href="IChI_lib/src/">IChI_lib/src</a></code> folder
 - Once successfully compiled, <code>winchi-1.exe</code> executable will be located in:
-  - <code>wIChI/x64_Release</code> for <code>Release</code> solution configuration 
+  - <code><a href="wIChI/x64_Release">wIChI/x64_Release</a></code> for <code>Release</code> solution configuration 
   - <code>wIChI/x64_Debug</code> for <code>Debug</code> solution configuration.
 
 ## External links and references
