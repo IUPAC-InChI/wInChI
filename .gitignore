@@ -1,16 +1,15 @@
-INCHI-1-TEST/**/*.so*
-INCHI-1-TEST/data/**/*.html
-INCHI-1-TEST/data/**/*.log
-INCHI-1-TEST/data/pubchem/compound
-INCHI-1-TEST/data/pubchem/compound3d
-INCHI-1-TEST/data/pubchem/substance
-INCHI-1-TEST/legacy.bak/
+wIChI/tmp/x64_Release/*.*
+!wIChI/tmp/x64_Release/readme.md
+wIChI/tmp/x64_Release/wIChI.tlog/
+wIChI/x64_Release/*.*
+!wIChI/x64_Release/readme.md
+IChI_lib/tmp/x64_Release/*.*
+!IChI_lib/tmp/x64_Release/readme.md
+IChI_lib/tmp/x64_Release/wIChI.tlog/
+IChI_lib/x64_Release/*.*
+!IChI_lib/x64_Release/readme.md
 .listing
-*.o
-__pycache__
-.pytest_cache
 .vscode/
-*.egg-info/
 # Ignore core dump files
 core.*[0-9]
-gcc_crash_report.txt
+.vs/
