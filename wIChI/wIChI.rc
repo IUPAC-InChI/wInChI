@@ -203,7 +203,7 @@ CAPTION "About winchi-1"
 FONT 8, "MS Shell Dlg"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "wInChI v.1.07.2\nPowered by InChI Software",IDC_STATIC,52,15,
+    LTEXT           "wInChI v.1.07.3\nPowered by InChI Software",IDC_STATIC,52,15,
                     111,21,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,67,41,50,14,WS_GROUP
 END
