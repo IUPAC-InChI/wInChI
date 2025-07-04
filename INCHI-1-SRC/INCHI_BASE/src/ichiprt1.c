@@ -497,7 +497,7 @@ typedef enum tagAuxLblBit
     AL_REC_ = 1 << AL_REC__ORD
 } AUX_LBL_BIT;
 
-const int MAX_TAG_NUM = inchi_max( (int) IL_MAX_ORD, (int) AL_MAX_ORD );
+const int MAX_TAG_NUM = inchi_max( (short) IL_MAX_ORD, (short) AL_MAX_ORD ); /* djb-rwth: fixing MSVC warning C5287 */
 
 char *szGetTag( const INCHI_TAG *Tag, int nTag, int bTag, char *szTag, int *bAlways );
 
@@ -2300,7 +2300,7 @@ int CleanOrigCoord( MOL_COORD szCoord, int delim )
             {
                 ;
             }
-            if (i > fst)
+            if ((i > fst)) /* && (len - fst <= LEN_COORD + 1 - i) && (len - fst <= LEN_COORD + 1 - fst) djb-rwth: fixing GHI #138 */
             {
                 memmove(szVal + fst, szVal + i, (long long)len - (long long)fst); /* djb-rwth: cast operator added */
                 len -= i - fst;

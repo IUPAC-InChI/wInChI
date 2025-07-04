@@ -2333,7 +2333,7 @@ int analyze_CRU_folding(ORIG_ATOM_DATA *orig_at_data,
     ITRACE_("\n* Found %-d times foldable unit of %-d fragments\n* First repeating sub-unit formed by %-d-fragment backbone : ",
             n_fold, n_frags, n_frags_in_repeating_subunit);
     
-    for (k = 0; k < n_frags_in_repeating_subunit && frag[k]; k++) /* djb-rwth: fixing a NULL pointer dereference */
+    for (k = 0; k < n_frags_in_repeating_subunit && n_frags_in_repeating_subunit < n_frags && frag[k]; k++) /* djb-rwth: fixing a NULL pointer dereference and buffer overflow */
     {
         if (frag[k]->end1 == frag[k]->end2)
         {
@@ -2374,7 +2374,7 @@ int analyze_CRU_folding(ORIG_ATOM_DATA *orig_at_data,
     */
 
     /*djb-rwth: the whole block had to be rewritten to fix NULL pointer dereference */
-    if (frag[n_frags_in_repeating_subunit] && frag[n_frags_in_repeating_subunit - 1]) /* djb-rwth: fixing a NULL pointer dereference */ /* djb-rwth: ui_rr */
+    if (n_frags_in_repeating_subunit < n_frags && frag[n_frags_in_repeating_subunit] && frag[n_frags_in_repeating_subunit - 1]) /* djb-rwth: fixing a NULL pointer dereference and buffer overflow */
     {
         subunit_last_atom        = frag[n_frags_in_repeating_subunit - 1]->end2;
         next_subunit_first_atom  = frag[n_frags_in_repeating_subunit]->end1;

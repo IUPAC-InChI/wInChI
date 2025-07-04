@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <locale.h>
 
 #include "mode.h"
 #include "ichimake.h"
@@ -3755,6 +3756,12 @@ int  Create_INChI( CANON_GLOBALS *pCG,
     int bExtract = 0; /*  EXTR_HAS_ATOM_WITH_DEFINED_PARITY; */
 #endif
 
+#ifdef GHI100_FIX
+#if ((SPRINTF_FLAG != 1) && (SPRINTF_FLAG != 2))
+    setlocale(LC_ALL, "en-US"); /* djb-rwth: setting all locales to "en-US" */
+#endif
+#endif
+
 /* */
     int bFixIsoFixedH = 0;
     int bFixTermHChrg = 0;
@@ -4524,7 +4531,23 @@ exit_function:
     }
     else
     {
-        free_t_group_info( t_group_info );
+        /* free_t_group_info(t_group_info); */
+        if (t_group_info) /* djb-rwth: fixing oss-fuzz issue #42537161/70475 */
+        {
+            if (t_group_info->nEndpointAtomNumber)
+            {
+                inchi_free(t_group_info->nEndpointAtomNumber);
+            }
+            if (t_group_info->tGroupNumber)
+            {
+                inchi_free(t_group_info->tGroupNumber);
+            }
+            if (t_group_info->nIsotopicEndpointAtomNumber)
+            {
+                inchi_free(t_group_info->nIsotopicEndpointAtomNumber);
+            }
+            memset(t_group_info, 0, sizeof(*t_group_info)); /* djb-rwth: memset_s C11/Annex K variant? */
+        }
     }
     free_t_group_info( t_group_info_orig );
 

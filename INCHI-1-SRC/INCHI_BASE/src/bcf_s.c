@@ -45,7 +45,15 @@
 #include <string.h>
 #include <errno.h>
 #include "ichirvrs.h"
+#include <math.h>
 #include "bcf_s.h"
+
+#define STB_SPRINTF_IMPLEMENTATION
+#include "stb_sprintf.h"
+
+static int dbl2int_f(double dblinp, int fwidth, int ndecpl, char* str);
+static int dbl2int_e(double dblinp, int fwidth, int ndecpl, char* str);
+static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str);
 
 int max_3(int a, int b, int c)
 {
@@ -78,4 +86,350 @@ int memcpy_custom(char** dst, char* src, unsigned long long len)
         return RI_ERR_ALLOC;
     }
     return 0;
+}
+
+/* djb-rwth: main sprintf emulation for avoiding locales */
+int dbl2int(char* str, int fwidth, int ndecpl, char dbl_flag, double dblinp)
+{
+	switch (dbl_flag)
+	{
+	case 'f':
+	case 'F':
+		return dbl2int_f(dblinp, fwidth, ndecpl, str);
+		break;
+	case 'e':
+	case 'E':
+		return dbl2int_e(dblinp, fwidth, ndecpl, str);
+		break;
+	case 'g':
+	case 'G':
+		return dbl2int_g(dblinp, fwidth, ndecpl, str);
+		break;
+	default:
+		printf("dbl2int format flag not valid.\n");
+		break;
+	}
+
+	return -1;
+}
+
+/* djb-rwth: sprintf("%X.Yf", arg) emulation */
+static int dbl2int_f(double dblinp, int fwidth, int ndecpl, char* str)
+{
+	double dec_part, dblinpabs;
+	char* intpl_str;
+	const char* dblinp_sign;
+	int expnr = 0, fw_int, fw_dec, i, fw_real;
+	long long int intpl, decpl = 0;
+
+	dblinp_sign = (dblinp >= 0.0) ? "" : "-";
+	dblinpabs = fabsl(dblinp);
+	intpl = (long long int)trunc(dblinpabs);
+	dec_part = dblinpabs - intpl;
+	fw_int = (int)log10((double)intpl > 0 ? (double)intpl : 1.0) + 1 + !strcmp(dblinp_sign, "-");
+
+	intpl_str = (char*)malloc(((long long int)fw_int + 3) * sizeof(unsigned long long int));
+
+	if (ndecpl > 0)
+	{
+		fw_dec = (ndecpl > 9) ? 9 : ndecpl;
+	}
+	else if (ndecpl == 0)
+	{
+		fw_dec = 0;
+	}
+	else
+	{
+		fw_dec = 6;
+	}
+	fw_real = fw_int + (ndecpl != 0) + fw_dec;
+
+	if (ndecpl)
+	{
+		fw_int += (fwidth - fw_real > 0) ? fwidth - fw_real : 0;
+
+		for (i = 0; i < fw_dec; i++)
+		{
+			dec_part *= 10;
+			decpl = 10 * decpl + (long long int)dec_part;
+			dec_part = dec_part - trunc(dec_part);
+		}
+
+		decpl += (long long int)round(dec_part);
+		if (((int)log10((double)decpl > 0 ? (double)decpl : 1.0) + 1) > fw_dec)
+		{
+			intpl++;
+			decpl -= (int)pow(10, fw_dec);
+		}
+
+		if (intpl_str)
+		{
+			sprintf(intpl_str, "%s%lld", dblinp_sign, intpl);
+		}
+		else
+		{
+			return -1;
+		}
+
+		return sprintf(str, "%*s.%0*lld", fw_int, intpl_str, fw_dec, decpl);
+	}
+	else
+	{
+		intpl = (long long int)round(dblinp);
+
+		return sprintf(str, "%*lld", fw_real, intpl);
+	}
+}
+
+/* djb-rwth: sprintf("%X.Ye", arg) emulation */
+static int dbl2int_e(double dblinp, int fwidth, int ndecpl, char* str)
+{
+	double dec_part, dblinpabs;
+	int expnr = 0, fw_int, fw_dec, fw_real, dblinp_sign, nintpl, i;
+	long long int intpl = 0, decpl = 0;
+
+	dblinp_sign = (dblinp >= 0.0) ? 1 : -1;
+	dblinpabs = fabsl(dblinp);
+	intpl = (long long int)trunc(dblinpabs);
+	dec_part = dblinpabs - intpl;
+	nintpl = (int)log10((double)intpl > 0 ? (double)intpl : 1) + 1;
+
+	if (nintpl > 1)
+	{
+		for (int j = 0; j < nintpl - 1; j++)
+		{
+			dblinp /= 10.0;
+			expnr++;
+		}
+	}
+	else
+	{
+		if (dblinp)
+		{
+			while (!trunc(dblinp))
+			{
+				dblinp *= 10.0;
+				expnr--;
+			}
+		}
+	}
+
+	dblinpabs = fabsl(dblinp);
+	intpl = (long long int)trunc(dblinpabs);
+	dec_part = dblinpabs - intpl;
+	fw_int = (dblinp_sign < 0) + 1;
+
+	if (ndecpl > 0)
+	{
+		fw_dec = (ndecpl > 9) ? 9 : ndecpl;
+	}
+	else if (ndecpl == 0)
+	{
+		fw_dec = 0;
+	}
+	else
+	{
+		fw_dec = 6;
+	}
+	fw_real = fw_int + (ndecpl != 0) + fw_dec + 4;
+
+	if (ndecpl)
+	{
+		fw_int += (fwidth - fw_real > 0) ? fwidth - fw_real : 0;
+
+		for (i = 0; i < fw_dec; i++)
+		{
+			dec_part *= 10;
+			decpl = 10 * decpl + (int)dec_part;
+			dec_part = dec_part - trunc(dec_part);
+		}
+
+		decpl += (long long int)round(dec_part);
+		if (((int)log10((double)decpl > 0 ? (double)decpl : 1.0) + 1) > fw_dec)
+		{
+			intpl++;
+			decpl -= (int)pow(10, fw_dec);
+		}
+
+		nintpl = (int)log10((double)intpl > 0 ? (double)intpl : 1.0) + 1;
+		if (nintpl > 1)
+		{
+			intpl /= 10;
+			expnr++;
+		}
+
+		intpl *= dblinp_sign;
+
+		return sprintf(str, "%*lld.%0*llde%+0*d", fw_int, intpl, fw_dec, decpl, 3, expnr);
+	}
+	else
+	{
+		intpl = (int)round(dblinp);
+
+		return sprintf(str, "%*llde%+0*d", fw_real, intpl, 3, expnr);
+	}
+}
+
+/* djb-rwth: sprintf("%X.Yg", arg) emulation */
+static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
+{
+	double dec_part, dblinpabs, dblinpc = dblinp;
+	char* intpl_str;
+	const char* dblinp_signf;
+	int expnr = 0, fw_int, fw_dec, fw_real, dblinp_signe, nintpl, i;
+	long long int intpl = 0, decpl = 0;
+
+	dblinpabs = fabsl(dblinpc);
+	intpl = (long long int)trunc(dblinpabs);
+	nintpl = (int)log10((double)intpl > 0 ? (double)intpl : 1) + 1;
+
+	if (nintpl > 1)
+	{
+		for (int j = 0; j < nintpl - 1; j++)
+		{
+			dblinpc /= 10.0;
+			expnr++;
+		}
+	}
+	else
+	{
+		if (dblinp)
+		{
+			while (!trunc(dblinpc))
+			{
+				dblinpc *= 10.0;
+				expnr--;
+			}
+		}
+	}
+
+	if (ndecpl > 0)
+	{
+		fw_dec = (ndecpl > 9) ? 9 : ndecpl;
+	}
+	else if (ndecpl == 0)
+	{
+		fw_dec = 1;
+	}
+	else
+	{
+		fw_dec = 6;
+	}
+
+	if (!dblinpc)
+	{
+		return sprintf(str, "%lld", intpl);
+	}
+
+	if ((fw_dec > expnr) && (expnr >= -4))
+	{
+		dblinp_signf = (dblinp >= 0.0) ? "" : "-";
+		dblinpabs = fabsl(dblinp);
+		intpl = (long long int)trunc(dblinpabs);
+		dec_part = dblinpabs - intpl;
+		fw_int = (int)log10((double)intpl > 0 ? (double)intpl : 1.0) + 1 + !strcmp(dblinp_signf, "-");
+
+		intpl_str = (char*)malloc(((long long int)fw_int + 3) * sizeof(unsigned long long int));
+
+		fw_real = fw_int + (ndecpl != 0) + fw_dec;
+
+		if (fw_dec)
+		{
+			fw_int += (fwidth - fw_real > 0) ? fwidth - fw_real : 0;
+
+			for (i = 0; i < fw_dec; i++)
+			{
+				dec_part *= 10;
+				decpl = 10 * decpl + (long long int)dec_part;
+				dec_part -= trunc(dec_part);
+			}
+
+			decpl += (long long int)round(dec_part);
+
+			if (((int)log10((double)decpl > 0 ? (double)decpl : 1.0) + 1) > fw_dec)
+			{
+				intpl++;
+				decpl -= (int)pow(10, fw_dec);
+			}
+
+			if (decpl)
+			{
+				while (!(decpl % 10))
+				{
+					decpl /= 10;
+					fw_dec--;
+				}
+			}
+
+			if (intpl_str)
+			{
+				sprintf(intpl_str, "%s%lld", intpl ? dblinp_signf : "", intpl);
+			}
+			else
+			{
+				return -1;
+			}
+
+			if (decpl)
+			{
+				return sprintf(str, "%*s.%0*lld", fw_int, intpl_str, fw_dec, decpl);
+			}
+			else
+			{
+				return sprintf(str,  "%*s", fw_int, intpl_str);
+			}
+		}
+		else
+		{
+			intpl = (long long int)round(dblinp);
+
+			return sprintf(str, "%*lld", fw_real, intpl);
+		}
+	}
+	else
+	{
+		dblinp_signe = (dblinpc >= 0.0) ? 1 : -1;
+		dblinpabs = fabsl(dblinpc);
+		intpl = (long long int)trunc(dblinpabs);
+		dec_part = dblinpabs - intpl;
+		fw_int = (dblinp_signe < 0) + 1;
+
+		fw_real = fw_int + (ndecpl != 0) + fw_dec + 4;
+
+		if (ndecpl)
+		{
+			fw_int += (fwidth - fw_real > 0) ? fwidth - fw_real : 0;
+
+			for (i = 0; i < fw_dec; i++)
+			{
+				dec_part *= 10;
+				decpl = 10 * decpl + (int)dec_part;
+				dec_part = dec_part - trunc(dec_part);
+			}
+
+			decpl += (long long int)round(dec_part);
+			if (((int)log10((double)decpl > 0 ? (double)decpl : 1.0) + 1) > fw_dec)
+			{
+				intpl++;
+				decpl -= (int)pow(10, fw_dec);
+			}
+
+			nintpl = (int)log10((double)intpl > 0 ? (double)intpl : 1.0) + 1;
+			if (nintpl > 1)
+			{
+				intpl /= 10;
+				expnr++;
+			}
+
+			intpl *= dblinp_signe;
+
+			return sprintf(str, "%*lld.%0*llde%+0*d", fw_int, intpl, fw_dec, decpl, 3, expnr);
+		}
+		else
+		{
+			intpl = (int)round(dblinpc);
+
+			return sprintf(str, "%*llde%+0*d", fw_real, intpl, 3, expnr);
+		}
+	}
 }

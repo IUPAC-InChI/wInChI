@@ -47,6 +47,7 @@
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
+#include <locale.h>
 
 #ifndef COMPILE_ANSI_ONLY
 #include <conio.h>
@@ -221,6 +222,12 @@ int WasInterrupted(void)
 /****************************************************************************/
 int main(int argc, char* argv[])
 {
+#ifdef GHI100_FIX
+#if ((SPRINTF_FLAG != 1) && (SPRINTF_FLAG != 2))
+    setlocale(LC_ALL, "en-US"); /* djb-rwth: setting all locales to "en-US" */
+#endif
+#endif
+
     /*************************/
 #if ( BUILD_WITH_AMI == 1 )
 /*************************/
@@ -459,8 +466,12 @@ int ProcessMultipleInputFiles(int argc, char* argv[])
                 targv[++targc] = argv[i];
             }
         }
-
-        targv[++targc] = NULL; /* djb-rwth: ui_rr */
+        /* djb-rwth: fixing undefined index value / buffer overflow */
+        ++targc;
+        if (targc < argc + 3)
+        {
+            targv[targc] = NULL;
+        }
 
         ret = ProcessSingleInputFile(targc, targv); /* ProcessSingleInputFile() is a former main() */
 

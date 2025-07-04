@@ -290,11 +290,11 @@ int SortAndPrintINChI( CANON_GLOBALS            *pCG,
             k1 = TAUT_YES; /* in Mobile H order */
             /* store components in Mobile H order */
 
-            for (i = 0; i < num_components[j]; i++)
+            for (i = 0; i < num_components[j] && i < max_num_components; i++) /* djb-rwth: fixing undefined index value / buffer overflow */
             {
 
                 if (pINChISort[j][k1][i].pINChI[TAUT_NON] &&
-                    !pINChISort[j][k1][i].pINChI[TAUT_YES]) /* djb-rwth: ui_rr */
+                    !pINChISort[j][k1][i].pINChI[TAUT_YES])
                 {
                     /* make sure Mobile-H is always present */
                     for (k = 0; k < TAUT_NUM; k++)

@@ -131,7 +131,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 #ifdef STD_WINCHI
 	SetTitle(_T("stdwInChI-1"));
 #else
-	SetTitle(_T("wInChI v.1.07.3"));
+	SetTitle(_T("wInChI v.1.07.4"));
 #endif
 
 	return 0;

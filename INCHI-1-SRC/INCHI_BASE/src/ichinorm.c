@@ -1817,10 +1817,10 @@ int is_DERIV_RING_DMOX_DEOX_O( inp_ATOM *at,
     ->
     --------------------------*/
     /*            #0           #1           #2           #3           #4 */
-    const static U_CHAR bond_type[OX_RING_SIZE] = { BOND_SINGLE, BOND_SINGLE, BOND_SINGLE, BOND_DOUBLE, BOND_SINGLE };
-    const static S_CHAR valence[OX_RING_SIZE] = { 2,           2,           4,           2,           3 };
-    const static S_CHAR bonds_valence[OX_RING_SIZE] = { 2,           2,           4,           3,           4 };
-    const static S_CHAR num_H[OX_RING_SIZE] = { 0,           2,           0,           0,           0 };
+    static const U_CHAR bond_type[OX_RING_SIZE] = { BOND_SINGLE, BOND_SINGLE, BOND_SINGLE, BOND_DOUBLE, BOND_SINGLE };
+    static const S_CHAR valence[OX_RING_SIZE] = { 2,           2,           4,           2,           3 };
+    static const S_CHAR bonds_valence[OX_RING_SIZE] = { 2,           2,           4,           3,           4 };
+    static const S_CHAR num_H[OX_RING_SIZE] = { 0,           2,           0,           0,           0 };
 
     AT_NUMB from, curr, next, nRingSystem, at_no[OX_RING_SIZE];
     S_CHAR  bond_no[OX_RING_SIZE];
@@ -1977,10 +1977,10 @@ int is_DERIV_RING_DMOX_DEOX_N( inp_ATOM *at,
     <-
     --------------------------*/
     /*            #0           #1           #2           #3           #4 */
-    const static U_CHAR bond_type[OX_RING_SIZE] = { BOND_SINGLE, BOND_SINGLE, BOND_SINGLE, BOND_SINGLE, BOND_DOUBLE };
-    const static S_CHAR valence[OX_RING_SIZE] = { 2,           4,           2,           2,           3 };
-    const static S_CHAR bonds_valence[OX_RING_SIZE] = { 3,           4,           2,           2,           4 };
-    const static S_CHAR num_H[OX_RING_SIZE] = { 0,           0,           2,           0,           0 };
+    static const U_CHAR bond_type[OX_RING_SIZE] = { BOND_SINGLE, BOND_SINGLE, BOND_SINGLE, BOND_SINGLE, BOND_DOUBLE };
+    static const S_CHAR valence[OX_RING_SIZE] = { 2,           4,           2,           2,           3 };
+    static const S_CHAR bonds_valence[OX_RING_SIZE] = { 3,           4,           2,           2,           4 };
+    static const S_CHAR num_H[OX_RING_SIZE] = { 0,           0,           2,           0,           0 };
 
     AT_NUMB from, curr, next, nRingSystem, at_no[OX_RING_SIZE];
     S_CHAR  bond_no[OX_RING_SIZE];
@@ -2261,7 +2261,7 @@ int is_DERIV_RING2_PRRLDD_PPRDN( inp_ATOM *at,
                 k = ( ord[1] < ord[0] );
                 da1->ord[0] = ord[k];  /* smaller */
                 da1->ord[1] = ord[!k]; /* greater */
-                da1->num[0] = da1->num[0] = i - 1;
+                /*da1->num[0] = */da1->num[0] = i - 1; /* djb-rwth: ui_rr? / da1->num[1] = i-1? */
             }
             return i;
         }
@@ -6493,7 +6493,7 @@ int OAD_Edit_Underivatize( struct tagINCHI_CLOCK *ic,
                         continue;
                     }
                     /*for ( k = 0; k < MAX_AT_DERIV && da[n].typ[k]; k ++ ) -- bug fixed 2013-11-07 DCh */
-                    for (k = 0; k < DERIV_AT_LEN && da[n].typ[k]; k++) /* djb-rwth: ui_rr */
+                    for (k = 0; k < DERIV_AT_LEN && n< num_atoms && da[n].typ[k]; k++)
                     {
                         if (da[n].typ[k] & DERIV_DUPLIC)
                         {
@@ -6877,7 +6877,7 @@ int OAD_Edit_Underivatize( struct tagINCHI_CLOCK *ic,
                 for (j = n = 0; j < 2; j++)
                 {
                     int atj = (int) ap[i].at[j];
-                    if (da[atj].typ[0] && at[atj].neighbor[(int) da[atj].ord[0]] == ap[i].at[1 - j])
+                    if (atj < num_atoms && da[atj].typ[0] && at[atj].neighbor[(int) da[atj].ord[0]] == ap[i].at[1 - j])
                     {
                         k = j;      /* ap[i].at[k] is precursor atom */
                         n++;
@@ -6886,7 +6886,7 @@ int OAD_Edit_Underivatize( struct tagINCHI_CLOCK *ic,
                     }
                     else
                     {
-                        if (da[atj].typ[1] && at[atj].neighbor[(int) da[atj].ord[1]] == ap[i].at[1 - j])
+                        if (atj < num_atoms && da[atj].typ[1] && at[atj].neighbor[(int) da[atj].ord[1]] == ap[i].at[1 - j])
                         {
                             k = j;
                             n++;

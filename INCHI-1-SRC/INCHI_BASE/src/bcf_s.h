@@ -49,7 +49,7 @@
 #include <string.h>
 #include <errno.h>
 
-#define CURRENT_VER "1.07.3" /* djb-rwth: full version number in the output, required for fixing GHI #61 */
+#define CURRENT_VER "1.07.4" /* djb-rwth: full version number in the output, required for fixing GHI #61 */
 
 #ifdef __STDC_LIB_EXT1__
 #if (__STDC_LIB_EXT1__ >= 201112L)
@@ -69,9 +69,12 @@
 
 /* djb-rwth: control macros */
 #define RINCHI_TEST 0 /* djb-rwrh: RInChI testing */
+/* #define GHI100_FIX */ /* djb-rwth: enabling any of the three GHI #100 fixes defined by SPRINTF_FLAG macro */
+#define SPRINTF_FLAG 2 /* djb-rwth: 1 - stb_(v)s(n)pritnf, 2 - custom double to 2*int; any other value (different from 1 or 2) - standard sprintf w/ setlocale */
 
 /* djb-rwth: custom functions */
 int max_3(int a, int b, int c);
 int memcpy_custom(char** dst, char* src, unsigned long long len);
+int dbl2int(char* str, int fwidth, int ndecpl, char dbl_flag, double dblinp);
 
 #endif

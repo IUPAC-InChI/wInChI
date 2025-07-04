@@ -3063,9 +3063,9 @@ int OAD_CollectReachableAtoms( ORIG_ATOM_DATA  *orig_at_data,
             goto exit_function;
         }
 
-        for (j = 0; j < natnums; j++)
+        for (j = 0; j < natnums && j < max_atoms; j++) /* djb-rwth: fixing buffer overruns */
         {
-            reachable[(*n_reachable)++ ] = atnums[j]; /* djb-rwth: ui_rr */
+            reachable[(*n_reachable)++ ] = atnums[j];
         }
     }
 

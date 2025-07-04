@@ -53,6 +53,7 @@
 #include "ichi_io.h"
 
 #include "bcf_s.h"
+#include "stb_sprintf.h"
 
 /*
     Molfile V3000 related procedures
@@ -280,7 +281,7 @@ int MolfileV3000ReadField( void* data,
     {
         case MOL_FMT_STRING_DATA:
         {
-            if (nread)
+            if (nread && (nread <= 6)) /* djb-rwth: fixing GHI #133 */
             {
                 mystrncpy( (char *) data, field, nread + 1 );
             }
@@ -944,7 +945,21 @@ int MolfileV3000ReadAtomsBlock( MOL_FMT_CTAB* ctab,
             int len;
             char symbol[6]; /* TODO: treat possibly long V3000 atom names */
             double fx = 0.0, fy = 0.0, fz = 0.0;
+#ifdef GHI100_FIX
+#if (SPRINTF_FLAG == 2)
+            char* fxs, * fys, * fzs;
+            int rfxs, rfys, rfzs;
 
+            fxs = (char*)inchi_malloc((10 + 3) * sizeof(double));
+            fys = (char*)inchi_malloc((10 + 3) * sizeof(double));
+            fzs = (char*)inchi_malloc((10 + 3) * sizeof(double));
+
+            if (fxs || fys || fzs)
+            {
+                failed = 1;
+            }
+#endif
+#endif
             symbol[0] = '\0'; /* djb-rwth: adding zero termination */
 
             /* Read positional parameters */
@@ -995,6 +1010,37 @@ int MolfileV3000ReadAtomsBlock( MOL_FMT_CTAB* ctab,
             if (ctab->coords)
             {
                 char szcoords[40];
+#ifdef GHI100_FIX
+#if (SPRINTF_FLAG == 2)
+                if (fxs)
+                {
+                    rfxs = dbl2int(fxs, 10, -1, 'g', fx);
+                }                
+                if (fys)
+                {
+                    rfys = dbl2int(fys, 10, -1, 'g', fy);
+                }                
+                if (fzs)
+                {
+                    rfzs = dbl2int(fzs, 10, -1, 'g', fz);
+                }
+                if ((rfxs >= 0) && (rfys >= 0) && (rfzs >= 0))
+                {
+                    sprintf(szcoords, "%s%s%s", fxs, fys, fzs);
+                }
+                else
+                {
+                    failed = 1;
+                }
+                inchi_free(fxs);
+                inchi_free(fys);
+                inchi_free(fzs);
+#elif (SPRINTF_FLAG == 2)
+                stbsp_sprintf(szcoords, "%10g%10g%10g", fx, fy, fz);
+#else
+                sprintf(szcoords, "%10g%10g%10g", fx, fy, fz);
+#endif
+#endif
                 sprintf(szcoords, "%10g%10g%10g", fx, fy, fz);
                 strcpy(ctab->coords[i], szcoords);
             }

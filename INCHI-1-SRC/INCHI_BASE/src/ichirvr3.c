@@ -266,6 +266,7 @@ int FillTgDiffHChgFH( TgDiffHChgFH tdhc[],
     /* fill out atom index list */
     if (itg_out)
     {
+        itg_out--; /* djb-rwth: fixing undefined index value / buffer overflow */
         /* djb-rwth: removing redundant code */
         for (type = 0; type < fNumAllChgT; type++)
         {
@@ -273,7 +274,7 @@ int FillTgDiffHChgFH( TgDiffHChgFH tdhc[],
             for (i = 0; i < itg_out; i++)
             {
                 num = 0;
-                itg = tdhc[i].itg; /* djb-rwth: ui_rr? */
+                itg = tdhc[i].itg;
                 tdhc[i].i[type] = -999; /* empty */
                 while (IndList.pnEdges[j + 1] == itg)
                 {

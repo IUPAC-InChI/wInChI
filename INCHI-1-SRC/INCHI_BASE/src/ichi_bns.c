@@ -11875,9 +11875,9 @@ int ReInitBnStructForAltBns( BN_STRUCT *pBNS,
                         pBond->nBondTypeInpAltBns = BT_IGNORE_BOND;
                         break;
                 }
-                pBond->nBondNonStereoAltBns =
-                    pBond->nBlockNumberAltBns =
-                    pBond->nNumAtInBlockAltBns = 0;
+                pBond->nBondNonStereoAltBns = 0; /* djb-rwth: addressing GCC warning -- operations on pBond->cap might be undefined */
+                pBond->nBlockNumberAltBns = 0;
+                pBond->nNumAtInBlockAltBns = 0;
 
 #if ( RESET_EDGE_FORBIDDEN_MASK == 1 )
                 pBond->forbidden &= pBNS->edge_forbidden_mask;

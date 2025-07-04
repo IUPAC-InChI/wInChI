@@ -438,7 +438,7 @@ int RestoreAtomConnectionsSetStereo( StrFromINChI *pStruct,
             /* fill out deleted H atom info */
             for (i = num_atoms; i < num_atoms + nNumDeletedH; i++)
             {
-                /* djb-rwth: ui_rr */
+                /* djb-rwth: ui_rr? */
                 strcpy( at[i].elname, "H" );
                 at[i].el_number = EL_NUMBER_H;
                 at[i].orig_at_number = iAtNoOffset + i + 1;
@@ -567,7 +567,7 @@ int RestoreAtomConnectionsSetStereo( StrFromINChI *pStruct,
             jv = pStereo->nBondAtom1[i] - 1;
             jn = pStereo->nBondAtom2[i] - 1;
             parity = pStereo->b_parity[i];
-            if (!is_in_the_list( at[jv].neighbor, (AT_NUMB) jn, at[jv].valence ))
+            if ((jv < num_atoms) && !is_in_the_list( at[jv].neighbor, (AT_NUMB) jn, at[jv].valence )) /* djb-rwth: fixing GHI #126/16 */
             {
                 /* must be a cumulene */
                 if (!bFindCumuleneChain( at, (AT_NUMB) jv, (AT_NUMB) jn, nCumulene, MAX_CUMULENE_LEN + 1 ))
