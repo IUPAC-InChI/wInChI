@@ -6,6 +6,7 @@
 [![InChI - Web Demo](https://img.shields.io/badge/InChI-Web_Demo-2ea44f)](https://iupac-inchi.github.io/InChI-Web-Demo/)
 
 <p align="center">
+<<<<<<< HEAD
   <img src="docs/img/inchi-wheel.png" width="300" height="300" />
 </p>
 
