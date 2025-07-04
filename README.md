@@ -6,7 +6,7 @@
 [![InChI - Web Demo](https://img.shields.io/badge/InChI-Web_Demo-2ea44f)](https://iupac-inchi.github.io/InChI-Web-Demo/)
 
 <p align="center">
-  <img src="https://github.com/IUPAC-InChI/InChI/blob/main/Images/inchi-wheel.png" width="300" height="300" />
+  <img src="https://github.com/IUPAC-InChI/InChI/INCHI-1-DOC/assets/inchi-wheel.png" width="300" height="300" />
 </p>
 
 # wInChI - GUI software for calculation of IUPAC International Chemical Identifiers (InChIs)
