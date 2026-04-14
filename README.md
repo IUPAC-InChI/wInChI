@@ -49,8 +49,8 @@ Please check the cross-platform <a href="https://github.com/IUPAC-InChI/InChI-We
   - main <code>wIChI</code> project, with source code files located in <code><a href="wIChI/src/">wIChI/src</a></code> folder
   - supporting <code>IChI_lib</code> project, with source code files located in <code><a href="IChI_lib/src/">IChI_lib/src</a></code> folder
 - Once successfully compiled, <code>winchi-1.exe</code> executable will be located in:
-  - <code><a href="wIChI/x64_Release">wIChI/x64_Release</a></code> for <code>Release</code> solution configuration 
-  - <code>wIChI/x64_Debug</code> for <code>Debug</code> solution configuration.
+  - <code><a href="wIChI/Release">wIChI/Release</a></code> for <code>Release</code> solution configuration 
+  - <code>wIChI/Debug</code> for <code>Debug</code> solution configuration.
 
 ## External links and references
 
