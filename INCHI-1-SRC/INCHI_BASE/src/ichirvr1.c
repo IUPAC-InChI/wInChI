@@ -4101,7 +4101,10 @@ BN_STRUCT* AllocateAndInitTCGBnStruct( StrFromINChI *pStruct, VAL_AT *pVA,
                         }
                     }
                 }
-                vert->iedge[j] = pBNS->vert[neigh].iedge[k] = n_edges++; /* same iedge index as neighbor index in at[] */
+                if (pBNS->vert[neigh].iedge) /* djb-rwth: fixing a NULL pointer dereference */
+                {
+                    vert->iedge[j] = pBNS->vert[neigh].iedge[k] = n_edges++; /* same iedge index as neighbor index in at[] */
+                }
             }
             else
             {
@@ -5696,14 +5699,14 @@ int MakeInChIOutOfStrFromINChI2( INCHI_CLOCK *ic,
     if (0 >= inchi_strbuf_init(strbuf, INCHI_STRBUF_INITIAL_SIZE, INCHI_STRBUF_SIZE_INCREMENT))
     {
         ret = RI_ERR_ALLOC;
-        goto exit_error;
+        goto early_exit_error; /* djb-rwth: avoiding garbage value */
     }
 
     /* djb-rwth: fixing oss-fuzz issue #70552 */
     if (!ip_inp || !sd_inp || !pStruct)
     {
         ret = RI_ERR_ALLOC;
-        goto exit_error;
+        goto early_exit_error; /* djb-rwth: avoiding garbage value */
     }
 
     *ip = *ip_inp;
@@ -5874,6 +5877,7 @@ exit_error:
         FreeInpAtom(&orig_inp_data->at);
     }
 #endif
+early_exit_error:
     inchi_strbuf_close( strbuf );
 
     return ret;
@@ -6005,6 +6009,9 @@ int OutputInChIOutOfStrFromINChI( struct tagINCHI_CLOCK *ic,
             ret = ReconcileAllCmlBondParities( orig_inp_data->at, orig_inp_data->num_inp_atoms, 0 );
             if (ret < 0)
             {
+                /* djb-rwth: fixing a NULL pointer dereference */
+                free(orig_inp_data->at);
+                free(orig_inp_data->szCoord);
                 goto exit_error;
             }
         }
@@ -6020,7 +6027,10 @@ int OutputInChIOutOfStrFromINChI( struct tagINCHI_CLOCK *ic,
     }
     else
     {
+        /* djb-rwth: fixing a NULL pointer dereference */
         ret = RI_ERR_ALLOC;
+        free(orig_inp_data->at);
+        free(orig_inp_data->szCoord);
         goto exit_error;
     }
 

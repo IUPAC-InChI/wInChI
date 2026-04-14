@@ -759,13 +759,20 @@ int fix_odd_things( int num_atoms,
                     /* found both X(-) and X(+); change bonds and remove charges */
                     for (k1 = 0; k1 < at[c].valence && i1 != at[c].neighbor[k1]; k1++)
                         ;
-                    at[i1].charge = at[i2].charge = 0;
-                    at[i1].bond_type[i1_c] = at[c].bond_type[k1] = BOND_TYPE_SINGLE;
-                    at[i1].chem_bonds_valence--;
-                    at[i2].bond_type[i2_c] = at[c].bond_type[k2] = BOND_TYPE_DOUBLE;
-                    at[i2].chem_bonds_valence++;
-                    num_changes++;
-                    break;
+                    if ((i1_c >= 0) && (i2_c >= 0)) /* djb-rwth: fixing coverity ID #499537 */
+                    {
+                        at[i1].charge = at[i2].charge = 0;
+                        at[i1].bond_type[i1_c] = at[c].bond_type[k1] = BOND_TYPE_SINGLE;
+                        at[i1].chem_bonds_valence--;
+                        at[i2].bond_type[i2_c] = at[c].bond_type[k2] = BOND_TYPE_DOUBLE;
+                        at[i2].chem_bonds_valence++;
+                        num_changes++;
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
             } /* k2 */
         }
@@ -2740,7 +2747,7 @@ int bIsMetalToDisconnect( inp_ATOM *at, int i, int bCheckMetalValence )
 
         for (i = 0; i < 2 && ( i & type ); i++)
         {
-            if (at_valence == get_el_valence( at[i].el_number, at[i].charge, i ))
+            if (at_valence == get_el_valence( at[i].el_number, at[i].charge, i )) /* djb-rwth: fixing coverity ID #499532 -- unresolved issue -- revision required */
             {
                 return 2; /* atom has normal valence */
             }
@@ -4407,7 +4414,7 @@ int MarkDisconnectedComponents( ORIG_ATOM_DATA *orig_at_data,
     stable sort
     */
 
-    qsort( (void*) component_nbr[0], num_components, sizeof( component_nbr[0] ), cmp_components ); /* djb-rwth: buffer overrun while writing component_nbr[0]? */ /* djb-rwth: ui_rr? */
+    qsort( (void*) component_nbr[0], num_components, sizeof( component_nbr[0] ), cmp_components ); /* djb-rwth: fixed buffer overrun */
 
     /* Invert the transposition */
     for (i = 0; i < num_components; i++)
@@ -5033,7 +5040,7 @@ void imat_free( int m, int **a )
     {
         for (i = 0; i < m; i++)
         {
-            if (NULL != a[i]) /* djb-rwth: ui_rr? */
+            if (NULL != a[i]) /* djb-rwth: unresolved issue -- revision required? -- false positive as this function just does the clean-up job */
             {
                 inchi_free( a[i] );
             }
@@ -5168,7 +5175,7 @@ void subgraf_free( subgraf *sg )
     {
         for (i = 0; i < sg->nnodes; i++)
         {
-            if (sg->adj[i]) /* djb-rwth: ui_rr? */
+            if (sg->adj[i]) /* djb-rwth: unresolved issue -- revision required? -- false positive as this function just does the clean-up job */
             {
                 inchi_free( sg->adj[i] );
             }

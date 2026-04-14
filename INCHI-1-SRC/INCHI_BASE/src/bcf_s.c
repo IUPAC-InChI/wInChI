@@ -119,16 +119,16 @@ static int dbl2int_f(double dblinp, int fwidth, int ndecpl, char* str)
 	double dec_part, dblinpabs;
 	char* intpl_str;
 	const char* dblinp_sign;
-	int expnr = 0, fw_int, fw_dec, i, fw_real;
-	long long int intpl, decpl = 0;
+	int fw_int, fw_dec, i, fw_real, ret = 0;
+	long long int intpl, decpl = 0, intpl_size;
 
 	dblinp_sign = (dblinp >= 0.0) ? "" : "-";
 	dblinpabs = fabsl(dblinp);
 	intpl = (long long int)trunc(dblinpabs);
 	dec_part = dblinpabs - intpl;
 	fw_int = (int)log10((double)intpl > 0 ? (double)intpl : 1.0) + 1 + !strcmp(dblinp_sign, "-");
-
-	intpl_str = (char*)malloc(((long long int)fw_int + 3) * sizeof(unsigned long long int));
+	intpl_size = ((long long int)fw_int + 3) * sizeof(unsigned long long int);
+	intpl_str = (char*)inchi_malloc(intpl_size);
 
 	if (ndecpl > 0)
 	{
@@ -164,20 +164,23 @@ static int dbl2int_f(double dblinp, int fwidth, int ndecpl, char* str)
 
 		if (intpl_str)
 		{
-			sprintf(intpl_str, "%s%lld", dblinp_sign, intpl);
+			sprintf(intpl_str, "%s%lld", dblinp_sign, intpl); /* djb-rwth: ignoring LLVM warning */
 		}
 		else
 		{
 			return -1;
 		}
-
-		return sprintf(str, "%*s.%0*lld", fw_int, intpl_str, fw_dec, decpl);
+		
+		ret = sprintf(str, "%*s.%0*lld", fw_int, intpl_str, fw_dec, decpl); /* djb-rwth: ignoring LLVM warning */
+		inchi_free(intpl_str);
+		return ret;
 	}
 	else
 	{
 		intpl = (long long int)round(dblinp);
-
-		return sprintf(str, "%*lld", fw_real, intpl);
+		
+		inchi_free(intpl_str);
+		return sprintf(str, "%*lld", fw_real, intpl); /* djb-rwth: ignoring LLVM warning */
 	}
 }
 
@@ -185,18 +188,17 @@ static int dbl2int_f(double dblinp, int fwidth, int ndecpl, char* str)
 static int dbl2int_e(double dblinp, int fwidth, int ndecpl, char* str)
 {
 	double dec_part, dblinpabs;
-	int expnr = 0, fw_int, fw_dec, fw_real, dblinp_sign, nintpl, i;
+	int expnr = 0, fw_int, fw_dec, fw_real, dblinp_sign, nintpl, i, j;
 	long long int intpl = 0, decpl = 0;
 
 	dblinp_sign = (dblinp >= 0.0) ? 1 : -1;
 	dblinpabs = fabsl(dblinp);
 	intpl = (long long int)trunc(dblinpabs);
-	dec_part = dblinpabs - intpl;
 	nintpl = (int)log10((double)intpl > 0 ? (double)intpl : 1) + 1;
 
 	if (nintpl > 1)
 	{
-		for (int j = 0; j < nintpl - 1; j++)
+		for (j = 0; j < nintpl - 1; j++)
 		{
 			dblinp /= 10.0;
 			expnr++;
@@ -260,13 +262,13 @@ static int dbl2int_e(double dblinp, int fwidth, int ndecpl, char* str)
 
 		intpl *= dblinp_sign;
 
-		return sprintf(str, "%*lld.%0*llde%+0*d", fw_int, intpl, fw_dec, decpl, 3, expnr);
+		return sprintf(str, "%*lld.%0*llde%+0*d", fw_int, intpl, fw_dec, decpl, 3, expnr); /* djb-rwth: ignoring LLVM warning */
 	}
 	else
 	{
 		intpl = (int)round(dblinp);
 
-		return sprintf(str, "%*llde%+0*d", fw_real, intpl, 3, expnr);
+		return sprintf(str, "%*llde%+0*d", fw_real, intpl, 3, expnr); /* djb-rwth: ignoring LLVM warning */
 	}
 }
 
@@ -276,8 +278,8 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 	double dec_part, dblinpabs, dblinpc = dblinp;
 	char* intpl_str;
 	const char* dblinp_signf;
-	int expnr = 0, fw_int, fw_dec, fw_real, dblinp_signe, nintpl, i;
-	long long int intpl = 0, decpl = 0;
+	int expnr = 0, fw_int, fw_dec, fw_real, dblinp_signe, nintpl, i, j, ret = 0;
+	long long int intpl = 0, decpl = 0, intpl_size;
 
 	dblinpabs = fabsl(dblinpc);
 	intpl = (long long int)trunc(dblinpabs);
@@ -285,7 +287,7 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 
 	if (nintpl > 1)
 	{
-		for (int j = 0; j < nintpl - 1; j++)
+		for (j = 0; j < nintpl - 1; j++)
 		{
 			dblinpc /= 10.0;
 			expnr++;
@@ -318,7 +320,8 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 
 	if (!dblinpc)
 	{
-		return sprintf(str, "%lld", intpl);
+		ret = sprintf(str, "%lld", intpl); /* djb-rwth: ignoring LLVM warning */
+		return ret;
 	}
 
 	if ((fw_dec > expnr) && (expnr >= -4))
@@ -328,8 +331,8 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 		intpl = (long long int)trunc(dblinpabs);
 		dec_part = dblinpabs - intpl;
 		fw_int = (int)log10((double)intpl > 0 ? (double)intpl : 1.0) + 1 + !strcmp(dblinp_signf, "-");
-
-		intpl_str = (char*)malloc(((long long int)fw_int + 3) * sizeof(unsigned long long int));
+		intpl_size = ((long long int)fw_int + 3) * sizeof(unsigned long long int);
+		intpl_str = (char*)inchi_malloc(intpl_size);
 
 		fw_real = fw_int + (ndecpl != 0) + fw_dec;
 
@@ -363,7 +366,7 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 
 			if (intpl_str)
 			{
-				sprintf(intpl_str, "%s%lld", intpl ? dblinp_signf : "", intpl);
+				sprintf(intpl_str, "%s%lld", intpl ? dblinp_signf : "", intpl); /* djb-rwth: ignoring LLVM warning */
 			}
 			else
 			{
@@ -372,18 +375,22 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 
 			if (decpl)
 			{
-				return sprintf(str, "%*s.%0*lld", fw_int, intpl_str, fw_dec, decpl);
+				ret = sprintf(str, "%*s.%0*lld", fw_int, intpl_str, fw_dec, decpl); /* djb-rwth: ignoring LLVM warning */
+				inchi_free(intpl_str);
+				return ret;
 			}
 			else
 			{
-				return sprintf(str,  "%*s", fw_int, intpl_str);
+				ret = sprintf(str,  "%*s", fw_int, intpl_str); /* djb-rwth: ignoring LLVM warning */
+				inchi_free(intpl_str);
+				return ret;
 			}
 		}
 		else
-		{
+		{	/* djb-rwth: addressing coverity ID #499558 -- currently leaving this as it is still a part of GHI #100 */
 			intpl = (long long int)round(dblinp);
-
-			return sprintf(str, "%*lld", fw_real, intpl);
+			ret = sprintf(str, "%*lld", fw_real, intpl); /* djb-rwth: ignoring LLVM warning */
+			return ret;
 		}
 	}
 	else
@@ -422,14 +429,14 @@ static int dbl2int_g(double dblinp, int fwidth, int ndecpl, char* str)
 			}
 
 			intpl *= dblinp_signe;
-
-			return sprintf(str, "%*lld.%0*llde%+0*d", fw_int, intpl, fw_dec, decpl, 3, expnr);
+			ret = sprintf(str, "%*lld.%0*llde%+0*d", fw_int, intpl, fw_dec, decpl, 3, expnr); /* djb-rwth: ignoring LLVM warning */
+			return ret;
 		}
 		else
 		{
 			intpl = (int)round(dblinpc);
-
-			return sprintf(str, "%*llde%+0*d", fw_real, intpl, 3, expnr);
+			ret = sprintf(str, "%*llde%+0*d", fw_real, intpl, 3, expnr); /* djb-rwth: ignoring LLVM warning */
+			return ret;
 		}
 	}
 }

@@ -169,7 +169,7 @@ void PrintFileName( const char *fmt, FILE *out_file, const char *szFname )
     {
         p = szFname;
     }
-    fprintf( out_file, fmt, p );
+    fprintf( out_file, fmt, p ); /* djb-rwth: ignoring LLVM warning */
 }
 
 
@@ -495,7 +495,7 @@ int DrawStructure( HDC           pDC,
     {
         for (i = 0; i < num_at; i++)
         {
-            strcpy(str, inf_at[i].at_string);
+            strcpy(str, inf_at[i].at_string); /* djb-rwth: ignoring LLVM warning */
             DrawPreparedString( pDC, str, -inf_at[i].DrawingLabelLeftShift, nRound( at[i].x + xoff ), nRound( at[i].y + yoff ), inf_at[i].cHighlightTheAtom );
         }
     }
@@ -2494,7 +2494,7 @@ int CreateInputStructPicture( HDC            hDC,
     int nFontWidth = 0;
     int nPenWidth = 1;
     COLORREF clrPen = CLR_BLUE;
-    int afont;
+    int afont; /* djb-rwth: ignoring LLVM warning */
 
     /*bPrint = 1;*/ /* test */
 
@@ -2921,7 +2921,7 @@ LRESULT CALLBACK WndProcDisplayInputStructure( HWND   hWnd,
                                                WPARAM wParam,
                                                LPARAM lParam )
 {
-    int wmId, wmEvent;
+    int wmId, wmEvent; /* djb-rwth: ignoring LLVM warnings */
     PAINTSTRUCT ps;
     HDC hdc;
     MY_WINDOW_DATA *pWinData;

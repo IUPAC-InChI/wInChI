@@ -2691,8 +2691,9 @@ exit_function:
                 inchi_free( pRankStack2[n] );
             }
         }
-        inchi_free( pRankStack2 );
     }
+
+    inchi_free(pRankStack2); /* djb-rwth: fixing coverity ID #499631 */
 
     pCS->NeighList = NULL; /* keep the pointer in pBCN->ftcn[bTaut].NeighList for further deallocation */
     qfree( nAtomNumber );

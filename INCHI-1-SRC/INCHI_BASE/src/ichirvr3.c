@@ -6530,7 +6530,7 @@ exit_function:
     AllocEdgeList( &FixedLargeRingStereoEdges, EDGE_LIST_FREE );
     AllocEdgeList( &AllBondEdges, EDGE_LIST_FREE );
 
-    return ret < 0 ? ret : ( pc2i->bHasDifference && tot_succes ); /* djb-rwth: return value can be garbage (jump from Ln 368); discussion required */
+    return ret < 0 ? ret : ( tot_succes && pc2i->bHasDifference );
 }
 
 #endif

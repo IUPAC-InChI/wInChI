@@ -97,6 +97,8 @@ target_sources(inchi-1 PRIVATE
 	${P_BASE}/mol_fmt3.c
 	${P_BASE}/mol_fmt4.c
 	${P_BASE}/mol2atom.c
+	${P_BASE}/permutation_util.h
+	${P_BASE}/permutation_util.c
 	${P_BASE}/readinch.c
 	${P_BASE}/readinch.h
 	${P_BASE}/runichi.c
@@ -112,6 +114,13 @@ target_sources(inchi-1 PRIVATE
 	${P_BASE}/util.h
 	${P_VC}/resource.h
 )
+
+if(WIN32 AND MSVC)
+	target_sources(inchi-1 PRIVATE
+		${P_VC}/inchi-1.rc
+		${P_VC}/inchi-1.aps
+	)
+endif()
 
 set(CMAKE_DEBUG_POSTFIX d)
 set_target_properties(inchi-1 PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
@@ -133,4 +142,3 @@ target_include_directories(inchi-1 PUBLIC "${PROJECT_BINARY_DIR}")
 
 string(REGEX REPLACE "/RTC(su|[1su])" "" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
 string(REGEX REPLACE "/RTC(su|[1su])" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
-

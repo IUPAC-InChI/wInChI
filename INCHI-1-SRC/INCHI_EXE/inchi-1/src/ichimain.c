@@ -83,6 +83,7 @@
 #endif
 
 #include "../../../INCHI_BASE/src/bcf_s.h"
+#include "../../../INCHI_BASE/src/permutation_util.h"
 
  /*  Console-specific */
 
@@ -151,7 +152,7 @@ int user_quit(struct tagINCHI_CLOCK* ic,
 /****************************************************************************/
 void eat_keyboard_input(void)
 {
-    int ret_val; /* djb-rwth: adding return value */
+    int ret_val; /* djb-rwth: adding return value */ /* djb-rwth: ignoring LLVM warning */
 #ifndef TARGET_LIB_FOR_WINCHI
 
     while (_kbhit())
@@ -269,7 +270,7 @@ int ProcessMultipleInputFiles(int argc, char* argv[])
     char* fn_out, * fn_log, * fn_prb;
     char pNUL[] = "NUL";
     char** fn_ins = NULL, ** targv = NULL;
-    int ret_val; /* djb-rwth: adding return value */
+    int ret_val; /* djb-rwth: adding return value */ /* djb-rwth: ignoring LLVM warning */
 
 #if( BUILD_WITH_AMI == 1 && defined( _MSC_VER ) && MSC_AMI == 1 )
 #ifdef _WIN64
@@ -280,9 +281,9 @@ int ProcessMultipleInputFiles(int argc, char* argv[])
     struct _finddata_t file_info;
     intptr_t hFile = -1;
     int   retFile, lenPath;
-    char* pName, * pOutPath = NULL;
+    char* pName, * pOutPath = NULL; /* djb-rwth: ignoring LLVM warning */
     char pathname[_MAX_PATH];
-    char szBlank[] = "";
+    char szBlank[] = ""; /* djb-rwth: ignoring LLVM warning */
     int  numFiles = 0; /* counts processed files */
 #else
     int p;
@@ -622,6 +623,9 @@ int ProcessSingleInputFile(int argc, char* argv[])
 #endif
 
     sd->bUserQuit = 0;
+    /* djb-rwth: fixing coverity ID #499552 */
+    sd->num_components[0] = 0;
+    sd->num_components[1] = 0;
 #if ( defined( _WIN32 ) && defined( _CONSOLE ) && !defined( COMPILE_ANSI_ONLY ) )
     if (SetConsoleCtrlHandler(MyHandlerRoutine, 1))
     {
@@ -639,8 +643,8 @@ int ProcessSingleInputFile(int argc, char* argv[])
     inchi_ios_init(pprb, inchi_ios_type, NULL);
     memset(strbuf, 0, sizeof(*strbuf)); /* djb-rwth: memset_s C11/Annex K variant?; dereferencing strbuf */
 
-    if (argc == 1 || (argc == 2 && (argv[1][0] == INCHI_OPTION_PREFX)) &&
-        (!strcmp(argv[1] + 1, "?") || !inchi_stricmp(argv[1] + 1, "help"))) /* djb-rwth: addressing LLVM warning */
+    if (argc == 1 || (argc == 2 && (argv[1][0] == INCHI_OPTION_PREFX) &&
+        ((!strcmp(argv[1] + 1, "?") || !inchi_stricmp(argv[1] + 1, "help"))))) /* djb-rwth: addressing LLVM warning */
     {
         HelpCommandLineParms(plog);
         inchi_ios_flush(plog);
@@ -1459,146 +1463,6 @@ exit_function:
 
 
 #ifdef RENUMBER_ATOMS_AND_RECALC_V106
-
-/*****************************************************************************/
-int rrand(int m)
-{
-    return
-        (int)((double)m * (rand() / (RAND_MAX + 1.0)));
-}
-/*****************************************************************************/
-void shuffle(void* obj, size_t nmemb, size_t size)
-{
-    void* temp = inchi_malloc(size);
-    size_t n = nmemb;
-    while (n > 1)
-    {
-        size_t k = rrand((int)n--);
-        if (temp) /* djb-rwth: fixing a NULL pointer dereference */
-        {
-            memcpy(temp, BYTE(obj) + n * size, size);
-            memcpy(BYTE(obj) + n * size, BYTE(obj) + k * size, size);
-            memcpy(BYTE(obj) + k * size, temp, size);
-        }
-    }
-#ifdef _WIN32
-    _free_dbg(temp, _NORMAL_BLOCK); /* djb-rwth: _free_dbg for _malloc_dbg must be used if Windows SDK is used */
-#else
-    free(temp); /* djb-rwth: otherwise just free */
-#endif
-}
-
-
-/* Use after OrigAtData_Duplicate (permuted <-- saved) */
-void OrigAtData_Permute(ORIG_ATOM_DATA* permuted, ORIG_ATOM_DATA* saved, int* numbers)
-{
-    int i, j, k;
-    int nat = saved->num_inp_atoms;
-    size_t atsize = sizeof(saved->at[0]);
-    for (i = 0; i < nat; i++)
-    {
-        j = numbers[i];
-        memcpy(permuted->at + j, saved->at + i, atsize);
-        for (k = 0; k < permuted->at[j].valence; k++)
-        {
-            permuted->at[j].neighbor[k] = numbers[permuted->at[j].neighbor[k]];
-        }
-        permuted->at[j].orig_at_number = 1 + numbers[permuted->at[j].orig_at_number - 1];
-    }
-    if (saved->polymer && permuted->polymer)
-    {
-        if (saved->polymer->pzz)
-        {
-            for (k = 0; k < saved->polymer->n_pzz; k++)
-            {
-                permuted->polymer->pzz[k] = numbers[permuted->polymer->pzz[k]];
-            }
-        }
-        if (saved->polymer->units)
-        {
-            for (k = 0; k < saved->polymer->n; k++)
-            {
-                permuted->polymer->units[k]->cap1 = 1 + numbers[permuted->polymer->units[k]->cap1 - 1];
-                permuted->polymer->units[k]->cap1 = 1 + numbers[permuted->polymer->units[k]->end_atom1 - 1];
-                permuted->polymer->units[k]->cap1 = 1 + numbers[permuted->polymer->units[k]->cap2 - 1];
-                permuted->polymer->units[k]->cap1 = 1 + numbers[permuted->polymer->units[k]->end_atom2 - 1];
-                if (permuted->polymer->units[k]->alist)
-                {
-                    for (j = 0; j < permuted->polymer->units[k]->na; j++)
-                    {
-                        permuted->polymer->units[k]->alist[j] = 1 + numbers[permuted->polymer->units[k]->alist[j] - 1];
-                    }
-                    for (j = 0; j < permuted->polymer->units[k]->nb; j++)
-                    {
-                        permuted->polymer->units[k]->blist[2 * j] = 1 + numbers[permuted->polymer->units[k]->blist[2 * j] - 1];
-                        permuted->polymer->units[k]->blist[2 * j + 1] = 1 + numbers[permuted->polymer->units[k]->blist[2 * j + 1] - 1];
-                    }
-                }
-            }
-        }
-    }
-    if (saved->v3000 && permuted->v3000)
-    {
-        if (saved->v3000->atom_index_orig && permuted->v3000->atom_index_orig)
-        {
-            for (k = 0; k < nat; k++)
-            {
-                permuted->v3000->atom_index_orig[k] = numbers[permuted->v3000->atom_index_orig[k]];
-            }
-        }
-        if (saved->v3000->atom_index_fin && permuted->v3000->atom_index_fin)
-        {
-            for (k = 0; k < nat; k++)
-            {
-                permuted->v3000->atom_index_fin[k] = numbers[permuted->v3000->atom_index_fin[k]];
-            }
-        }
-        if (saved->v3000->n_haptic_bonds && saved->v3000->lists_haptic_bonds && permuted->v3000->n_haptic_bonds && permuted->v3000->lists_haptic_bonds)
-        {
-            for (j = 0; j < saved->v3000->n_haptic_bonds; j++)
-            {
-                permuted->v3000->lists_haptic_bonds[j][1] = numbers[permuted->v3000->lists_haptic_bonds[j][1]];
-                for (k = 3; k < saved->v3000->lists_haptic_bonds[j][2]; k++)
-                {
-                    permuted->v3000->lists_haptic_bonds[j][k] = numbers[permuted->v3000->lists_haptic_bonds[j][k]];
-                }
-            }
-        }
-        if (saved->v3000->n_steabs && saved->v3000->lists_steabs && permuted->v3000->n_steabs && permuted->v3000->lists_steabs)
-        {
-            for (j = 0; j < saved->v3000->n_steabs; j++)
-            {
-                for (k = 2; k < saved->v3000->lists_steabs[j][1] + 2; k++)
-                {
-                    permuted->v3000->lists_steabs[j][k] = numbers[permuted->v3000->lists_steabs[j][k]];
-                }
-            }
-        }
-        if (saved->v3000->n_sterel && saved->v3000->lists_sterel && permuted->v3000->n_sterel && permuted->v3000->lists_sterel)
-        {
-            for (j = 0; j < saved->v3000->n_sterel; j++)
-            {
-                for (k = 2; k < saved->v3000->lists_sterel[j][1] + 2; k++)
-                {
-                    permuted->v3000->lists_sterel[j][k] = numbers[permuted->v3000->lists_sterel[j][k]];
-                }
-            }
-        }
-        if (saved->v3000->n_sterac && saved->v3000->lists_sterac && permuted->v3000->n_sterac && permuted->v3000->lists_sterac)
-        {
-            for (j = 0; j < saved->v3000->n_sterac; j++)
-            {
-                for (k = 2; k < saved->v3000->lists_sterac[j][1] + 2; k++)
-                {
-                    permuted->v3000->lists_sterac[j][k] = numbers[permuted->v3000->lists_sterac[j][k]];
-                }
-            }
-        }
-    }
-
-    return;
-}
-
 
 /*****************************************************************************/
 
